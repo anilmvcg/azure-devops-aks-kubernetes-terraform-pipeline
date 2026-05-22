@@ -30,7 +30,7 @@ stages:
       - task: TerraformInstaller@1
         displayName: Install Terraform
         inputs:
-          terraformVersion: 'latest'
+          terraformVersion: '1.5.7'
       - task: TerraformTask@5
         displayName: Terraform init
         inputs:
@@ -40,7 +40,7 @@ stages:
           backendServiceArm: 'terraform-aks-azurerm-svc-con'
           backendAzureRmResourceGroupName: 'terraform-storage-rg'
           backendAzureRmStorageAccountName: 'terraformstorage9537'
-          backendAzureRmContainerName: 'tfstatefile'
+          backendAzureRmContainerName: 'tfstate'
           backendAzureRmKey: 'aks-base-tfstate'
       - task: TerraformTask@5
         displayName: Terraform Validate
