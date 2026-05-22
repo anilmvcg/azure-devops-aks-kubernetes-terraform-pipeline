@@ -33,36 +33,17 @@ stages:
           terraformVersion: '1.5.7'
 
       - script: |
-          terraform -v
-          which terraform
-        displayName: Verify Terraform Installation
-    
-      - task: TerraformTask@5
-        displayName: Terraform init
-        inputs:
-          provider: 'azurerm'
-          command: 'init'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/Terraform-manifests'
-          backendServiceArm: 'terraform-aks-azurerm-svc-con'
-          backendAzureRmResourceGroupName: 'terraform-storage-rg'
-          backendAzureRmStorageAccountName: 'terraformstorage9537'
-          backendAzureRmContainerName: 'tfstate'
-          backendAzureRmKey: 'aks-base-tfstate'
-      - task: TerraformTask@5
+          terraform init \
+            -backend-config="resource_group_name=terraform-storage-rg" \
+            -backend-config="storage_account_name=terraformstorage9537" \
+            -backend-config="container_name=tfstate" \
+            -backend-config="key=aks-base-tfstate"
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
+        displayName: Terraform Init
+
+      - script: terraform validate
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
         displayName: Terraform Validate
-        inputs:
-          provider: 'azurerm'
-          command: 'validate'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
-          
-
-
-
-
-
-
-
-
 
 
 
