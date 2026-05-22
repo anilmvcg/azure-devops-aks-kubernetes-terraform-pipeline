@@ -31,6 +31,12 @@ stages:
         displayName: Install Terraform
         inputs:
           terraformVersion: '1.5.7'
+
+      - script: |
+          terraform -v
+          which terraform
+        displayName: Verify Terraform Installation
+    
       - task: TerraformTask@5
         displayName: Terraform init
         inputs:
